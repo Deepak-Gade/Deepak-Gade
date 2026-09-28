@@ -1,0 +1,39 @@
+{
+  "name": "tutorlink-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:generate:postgres": "prisma generate --schema prisma/postgresql/schema.prisma",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:migrate:dev:postgres": "prisma migrate dev --schema prisma/postgresql/schema.prisma",
+    "prisma:migrate:deploy:postgres": "prisma migrate deploy --schema prisma/postgresql/schema.prisma",
+    "prisma:validate": "prisma validate --schema prisma/schema.prisma",
+    "prisma:validate:postgres": "prisma validate --schema prisma/postgresql/schema.prisma",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prisma": "6.19.0"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.0": true,
+    "prisma@6.19.0": true,
+    "@prisma/engines@6.19.0": true
+  }
+}

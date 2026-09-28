@@ -1,0 +1,40 @@
+{
+  "name": "tutorlink",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n web,api -c cyan,magenta \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "vite",
+    "dev:api": "npm --prefix server run dev",
+    "server": "npm --prefix server run dev",
+    "prisma:generate": "npm --prefix server run prisma:generate",
+    "prisma:generate:postgres": "npm --prefix server run prisma:generate:postgres",
+    "prisma:migrate": "npm --prefix server run prisma:migrate",
+    "prisma:migrate:dev:postgres": "npm --prefix server run prisma:migrate:dev:postgres",
+    "prisma:migrate:deploy:postgres": "npm --prefix server run prisma:migrate:deploy:postgres",
+    "prisma:validate": "npm --prefix server run prisma:validate",
+    "prisma:validate:postgres": "npm --prefix server run prisma:validate:postgres",
+    "prisma:seed": "npm --prefix server run prisma:seed",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^1.48.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "oxlint": "^1.81.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.3.0"
+  }
+}

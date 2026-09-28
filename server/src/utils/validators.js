@@ -1,0 +1,14 @@
+import { z } from 'zod'
+
+const text = (label, min = 1, max = 500) => z.string({ error: `${label} is required.` }).trim().min(min, `${label} is required.`).max(max, `${label} is too long.`)
+const list = (label) => z.array(z.string().trim().min(1)).max(30, `${label} has too many values.`)
+export const registerSchema = z.object({ name: text('Name', 2, 100), email: z.email().transform((value) => value.trim().toLowerCase()), phone: z.string().trim().max(30).optional().or(z.literal('')), password: z.string().min(8, 'Password must be at least 8 characters.').max(128), role: z.enum(['STUDENT', 'TUTOR']) })
+export const loginSchema = z.object({ email: z.email().transform((value) => value.trim().toLowerCase()), password: z.string().min(1, 'Password is required.') })
+export const requirementSchema = z.object({ className: text('Class', 1, 80), subjects: list('Subjects').min(1, 'Choose at least one subject.'), teachingMode: z.enum(['Online', 'Offline', 'Both']), location: z.string().trim().max(120).optional().default(''), pincode: z.string().trim().max(20).optional().default(''), budget: z.preprocess((value) => value === '' || value === null || value === undefined ? undefined : Number(value), z.number().int().positive().optional()), preferredTimings: list('Preferred timings').optional().default([]) })
+export const tutorProfileSchema = z.object({ profilePhoto: z.string().url().optional().or(z.literal('')), qualification: text('Qualification', 2, 180), experience: z.coerce.number().int().min(0).max(70), classes: list('Classes'), subjects: list('Subjects').min(1), teachingMode: list('Teaching modes').min(1), locations: list('Locations').optional().default([]), fees: z.coerce.number().int().min(0), availableTimings: list('Available timings').optional().default([]), about: z.string().trim().max(2000).optional().default('') })
+export const demoRequestSchema = z.object({ tutorId: text('Tutor', 1, 100), requirementId: z.string().optional().nullable(), className: text('Class', 1, 80), subject: text('Subject', 1, 100), mode: z.enum(['Online', 'Offline']), preferredDate: z.coerce.date(), preferredTime: text('Preferred time', 1, 50), location: z.string().trim().max(160).optional().default(''), notes: z.string().trim().max(2000).optional().default('') }).superRefine((data, context) => { if (data.mode === 'Offline' && !data.location) context.addIssue({ code: 'custom', path: ['location'], message: 'Location is required for an offline demo.' }) })
+export const statusSchema = z.object({ status: z.enum(['PENDING', 'ACCEPTED', 'DECLINED', 'COMPLETED', 'CANCELLED']) })
+export const verifySchema = z.object({ isVerified: z.boolean() })
+export const adminSearchQuerySchema = z.object({ q: z.string().trim().max(100).optional() })
+export const adminRequirementsQuerySchema = z.object({ studentId: z.string().trim().min(1).max(100).optional() })
+export const adminIdParamsSchema = z.object({ id: z.string().trim().min(1).max(100) })
