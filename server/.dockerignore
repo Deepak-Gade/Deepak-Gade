@@ -1,0 +1,7 @@
+.env
+.env.*
+!.env.example
+node_modules
+prisma/*.db
+prisma/*.db-journal
+src/generated
